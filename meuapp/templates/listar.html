@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes e Produtos</title>
+    <style>
+        /* Adicionando estilo básico para os botões */
+        button {
+            background-color: #007bff; /* Azul Bootstrap */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3; /* Azul mais escuro para hover */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clientes</h1>
+    <a href="{% url 'adicionar_cliente' %}">
+        <button>Adicionar Cliente</button>
+    </a>
+    <table>
+        <thead>
+            <tr>
+                <th>CPF</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Rua</th>
+                <th>Número</th>
+                <th>Bairro</th>
+                <th>Complemento</th>
+                <th>Cidade</th>
+                <th>CEP</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.cli_cpf }}</td>
+                <td>{{ cliente.cli_nome }}</td>
+                <td>{{ cliente.cli_tel }}</td>
+                <td>{{ cliente.cli_rua }}</td>
+                <td>{{ cliente.cli_numero }}</td>
+                <td>{{ cliente.cli_bairro }}</td>
+                <td>{{ cliente.cli_complemento }}</td>
+                <td>{{ cliente.cli_cidade }}</td>
+                <td>{{ cliente.cli_cep }}</td>
+                <td>{{ cliente.cli_email }}</td>
+                <td>
+                    <a href="{% url 'editar_cliente' cliente.cli_cpf %}">
+                        <button type="button">Editar</button>
+                    </a>
+                    <form action="{% url 'deletar_cliente' cliente.cli_cpf %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirmDelete();">Deletar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Produtos</h1>
+    <a href="{% url 'adicionar_produto' %}">
+        <button>Adicionar Produto</button>
+    </a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.prod_id }}</td>
+                <td>{{ produto.prod_nome }}</td>
+                <td>{{ produto.prod_dsc }}</td>
+                <td>{{ produto.prod_tipo }}</td>
+                <td>{{ produto.prod_val }}</td>
+                <td>{{ produto.prod_qntd }}</td>
+                <td>
+                    <a href="{% url 'editar_produto' produto.prod_id %}">
+                        <button type="button">Editar</button>
+                    </a>
+                    <form action="{% url 'deletar_produto' produto.prod_id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirmDelete();">Deletar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Função de confirmação ao deletar
+        function confirmDelete() {
+            return confirm("Tem certeza que deseja deletar este item?");
+        }
+    </script>
+</body>
+</html>

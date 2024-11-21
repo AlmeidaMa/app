@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Deleção de Cliente</title>
+</head>
+<body>
+    <h1>Confirmar Deleção de Cliente</h1>
+    <p>Tem certeza de que deseja deletar o cliente <strong>{{ cliente.cli_nome }}</strong>?</p>
+    <p><strong>CPF:</strong> {{ cliente.cli_cpf }}</p>
+    <p><strong>Nome:</strong> {{ cliente.cli_email }}</p>
+    <p><strong>Telefone:</strong> {{ cliente.cli_tel }}</p>
+    <p><strong>Rua:</strong> {{ cliente.cli_tel }}</p>
+    <p><strong>Numero:</strong> {{ cliente.cli_tel }}</p>
+    <p><strong>Bairro:</strong> {{ cliente.cli_tel }}</p>
+    <p><strong>Complemento:</strong> {{ cliente.cli_tel }}</p>
+    <p><strong>Cidade:</strong> {{ cliente.cli_tel }}</p>
+    <p><strong>CEP:</strong> {{ cliente.cli_tel }}</p>
+    <p><strong>Email:</strong> {{ cliente.cli_tel }}</p>
+    
+
+    <form action="{% url 'deletar_cliente' cliente.cli_cpf %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Sim, Deletar</button>
+        <a href="{% url 'listar' %}">Cancelar</a>
+    </form>
+</body>
+</html>
